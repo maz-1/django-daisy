@@ -62,14 +62,19 @@
         {% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
     </title>
 
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"/>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    {% if LOAD_FULL_STYLES %}
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"/>
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    {% else %}
+        <link rel="stylesheet" href="/static/admin/css/app.css">
+    {% endif %}
+
     <link href="{% static 'admin/css/customized_components.css' %}?v=3" rel="stylesheet">
 
     <link href="{% static 'admin/css/calendar.css' %}" rel="stylesheet">
 
     <link rel="stylesheet" href="{% static 'admin/fonts/fontawesome-free-6.6.0-web/css/all.min.css' %}"/>
-    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.css" rel="stylesheet">
+    <link href="{% static 'admin/css/vendor/tom-select.css' %}" rel="stylesheet">
 
     {% block body_font %}
         <style>
@@ -185,8 +190,8 @@
 
 <script src="{% static "admin/js/vendor/jquery/jquery.min.js" %}"></script>
 <script src="{% static "admin/js/jquery.init.js" %}"></script>
-<script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script>
 <script src="{% static "admin/js/theme-change.js" %}"></script>
+<script src="{% static "admin/js/vendor/tom-select.complete.min.js" %}"></script>
 <script defer src="{% static 'admin/js/SelectBox.js' %}"></script>
 <script src="{% static 'admin/js/admin/dashboard.js' %}"></script>
 {% for custom_script_link in EXTRA_SCRIPTS %}

@@ -168,7 +168,7 @@ a.tab-active i {
 }
 
 .ts-wrapper .ts-control {
-    @apply bg-base-200 border border-base-300 ;
+    @apply !bg-base-200 border border-base-300 ;
 }
 
 .ts-wrapper .ts-control > div {
@@ -243,7 +243,4 @@ input[data-jdp] {
 
 .ts-dropdown .active {
     @apply bg-base-300 text-base-content  ;
-}
-.ts-control {
-    @apply !bg-base-content;
 }

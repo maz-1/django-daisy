@@ -93,7 +93,7 @@ function close_modal() {
             },
             error: function (error) {
                 // What to do if the request fails
-                console.log('Error:', error);
+                console.log('Error showAdminPopup:', error);
             }
         });
 
@@ -104,13 +104,10 @@ function close_modal() {
     }
 
     function showRelatedObjectLookupPopup(triggeringLink) {
-        console.log("showRelatedObjectLookupPopup")
-
         return showAdminPopup(triggeringLink, /^lookup_/, true);
     }
 
     function dismissRelatedLookupPopup(chosenId) {
-        console.log("dismissRelatedLookupPopup")
         const id = $('.modal iframe').attr('data-target-field-id');
         const elem = document.getElementById(id);
         if (elem.classList.contains('vManyToManyRawIdAdminField') && elem.value) {
@@ -121,17 +118,14 @@ function close_modal() {
     }
 
     function showRelatedObjectPopup(triggeringLink) {
-        console.log("showRelatedObjectPopup");
         return showAdminPopup(triggeringLink, /^(change|add|delete)_/, false);
     }
 
     function updateRelatedObjectLinks(triggeringLink) {
-        console.log("updateRelatedObjectLinks");
         const $this = $(triggeringLink);
 
         // const siblings = $this.nextAll('.view-related, .change-related, .delete-related');
         const siblings = $this.parent().parent().find('.view-related, .change-related, .delete-related');
-        console.log(siblings)
 
         if (!siblings.length) {
             return;
@@ -148,7 +142,6 @@ function close_modal() {
     }
 
     function dismissAddRelatedObjectPopup(newId, newRepr) {
-        console.log("dismissAddRelatedObjectPopup");
         const id = $('.modal iframe').attr('data-target-field-id');
         const elem = document.getElementById(id);
         try {
@@ -173,13 +166,12 @@ function close_modal() {
             }
 
         } catch (e) {
-            console.log(e)
+            console.log("ERROR dismissAddRelatedObjectPopup: ", e)
         }
         close_modal()
     }
 
     function dismissChangeRelatedObjectPopup(objId, newRepr, newId) {
-        console.log("dismissChangeRelatedObjectPopup");
         try {
             const id = $('.modal iframe').attr('data-target-field-id');
             const selectsSelector = `#${id}, #${id}_from, #${id}`
@@ -197,7 +189,7 @@ function close_modal() {
                 this.title = newRepr;
             });
         } catch (e) {
-            console.log(e);
+            console.log("ERROR dismissChangeRelatedObjectPopup: ", e);
         }
 
         close_modal()
@@ -205,7 +197,6 @@ function close_modal() {
 
     function dismissDeleteRelatedObjectPopup(objId) {
         try {
-            console.log('dismissDeleteRelatedObjectPopup')
             const id = $('.modal iframe').attr('data-target-field-id');
             const selectsSelector = interpolate('#%s, #%s_from, #%s_to', [id, id, id]);
             const selects = $(selectsSelector);
@@ -216,13 +207,13 @@ function close_modal() {
             }).trigger('change');
 
         } catch (e) {
-            console.log(e);
+            console.log("ERROR dismissDeleteRelatedObjectPopup: ", e);
         }
         close_modal()
     }
 
     function fallbackDismissChangeRelatedObjectPopup(error) {
-        console.log(error);
+        console.log("ERROR fallbackDismissChangeRelatedObjectPopup", error);
         $('.modal-toggle').click()
     }
 

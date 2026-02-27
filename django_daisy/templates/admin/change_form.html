@@ -72,8 +72,7 @@
                             <div>
                                 <p class="errornote">
                                     <i class="fa fa-exclamation"></i>
-                                    {% blocktranslate count counter=errors|length %}Please correct the error
-                                        below.{% plural %}Please correct the errors below.{% endblocktranslate %}
+                                    {% blocktranslate count counter=errors|length %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktranslate %}
                                 </p>
                                 <ul class="menu">
                                     {% for error in adminform.form.non_field_errors %}
@@ -179,18 +178,18 @@
                     </div>
                     {% block after_related_objects %}{% endblock %}
                 </div>
-                {% block submit_buttons_bottom %}
-                    <div class="lg:col-span-1">
+                <div class="lg:col-span-1">
+                    {% block submit_buttons_bottom %}
                         <div class="w-full z-20 border-t border-base-300  sticky">
                             {% submit_row %}
                         </div>
-                        <div class="max-2xl:hidden  border-t max-w-md border-base-300 ">
+                        <div class="max-2xl:hidden border-t max-w-md border-base-300 ">
                             {% if original and not is_popup %}
                                 {% include "admin/includes/object_history_summary.html" %}
                             {% endif %}
                         </div>
-                    </div>
-                {% endblock %}
+                    {% endblock %}
+                </div>
             </div>
         </form>
     </div>

@@ -270,3 +270,8 @@ def _append_class_to_html_tag(html_tag: str, new_class: str) -> SafeString:
         html_tag = re.sub(r'(<[^>]*)(>)', rf'\1 class="{new_class}"\2', html_tag)
 
     return mark_safe(html_tag)
+
+
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key, '')
