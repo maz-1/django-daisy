@@ -29,8 +29,7 @@
                     <div class="divider divider-start">{{ forloop.counter }}.</div>
                 {% endif %}
                 <div class="inline-related{% if inline_admin_form.original or inline_admin_form.show_url %} has_original{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form last-related{% endif %}"
-                     id="{{ inline_admin_formset.formset.prefix }}-
-                         {% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
+                     id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
                     <div class="w-full flex flex-row justify-between bg-base-200 rounded-sm p-1 text-sm">
                     <span class="inline_label">
                         {% if inline_admin_form.original %}{{ inline_admin_form.original }}
