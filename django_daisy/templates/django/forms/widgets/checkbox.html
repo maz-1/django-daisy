@@ -5,14 +5,16 @@
                value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}  >
     {% endwith %}
 {% else %}
-    <label class="toggle toggle-sm toggle-primary checked:border-success checked:bg-success text-base-content">
-        <input type="{{ widget.type }}" name="{{ widget.name }}" {% if widget.value != None %}
-               value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}  >
-        <svg
+    <label class="text-base-content toggle toggle-sm">
+        {% with widget=widget|apply_class_to_widget:'' %}
+            <input class="toggle-primary" type="{{ widget.type }}" name="{{ widget.name }}" {% if widget.value != None %}
+                   value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}  >
+        {% endwith %}
+        <svg class=" rounded-full"
                 aria-label="enabled"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
-                fill="none"
+                fill="red"
                 stroke="currentColor"
                 stroke-width="4"
                 stroke-linecap="round"
@@ -21,7 +23,7 @@
             <path d="M18 6 6 18"/>
             <path d="m6 6 12 12"/>
         </svg>
-        <svg aria-label="disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <svg class="bg-success  rounded-full" aria-label="disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <g
                     stroke-linejoin="round"
                     stroke-linecap="round"
