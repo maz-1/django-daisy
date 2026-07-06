@@ -3,35 +3,50 @@
 @plugin "daisyui" {
     themes: light --default, dark --prefersdark, dracula, cmyk, lemonade, halloween, garden;
 }
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *, [data-theme=halloween], [data-theme=halloween] *, [data-theme=dracula], [data-theme=dracula] *));
 
+@custom-variant dark (&:where(
+[data-theme=dark],
+[data-theme=dark] *,
+[data-theme=halloween],
+[data-theme=halloween] *,
+[data-theme=dracula],
+[data-theme=dracula] *
+));
+
+/* ─── Typography ─────────────────────────────────────────── */
 
 body {
-    font-family: 'body-font', sans-serif; /* Default to LTR font */
+    font-family: 'body-font', sans-serif;
 }
 
 body:dir(rtl) {
-    font-family: 'rtl-font', sans-serif; /* Apply Vazir for RTL */
+    font-family: 'rtl-font', sans-serif;
 }
 
-.delete-confirmation li {
-    @apply !px-8  !pt-1;
-}
-
-.delete-confirmation li a {
-    @apply link link-hover text-primary;
-}
+/* ─── Global Resets ──────────────────────────────────────── */
 
 *:focus-visible {
     outline: none !important;
 }
 
-[dir="rtl"] .file-input::-webkit-file-upload-button {
-    margin-right: 0; /* For WebKit browsers in RTL */
+/* ─── RTL File Input ─────────────────────────────────────── */
+
+[dir="rtl"] .file-input::-webkit-file-upload-button,
+[dir="rtl"] .file-input::file-selector-button {
+    margin-right: 0;
 }
 
-[dir="rtl"] .file-input::file-selector-button {
-    margin-right: 0; /* For modern browsers in RTL */
+/* ─── Form Elements ──────────────────────────────────────── */
+
+.input,
+.select,
+.checkbox,
+.radio {
+    @apply rounded-md transition-all focus:outline-0 focus:outline-offset-0;
+}
+
+.card {
+    @apply rounded-md shadow-sm;
 }
 
 .errorlist {
@@ -39,17 +54,12 @@ body:dir(rtl) {
 }
 
 .errorlist li {
-    @apply label text-error font-bold;
+    @apply label font-bold text-error;
 }
 
-
-.card {
-    @apply rounded-md shadow-sm;
-}
-
-.input, .select, .checkbox, .radio {
-    @apply focus:outline-0 transition-all focus:outline-offset-0;
-    @apply rounded-md;
+label.required::after {
+    content: ' *';
+    @apply absolute px-1.5 text-base text-error;
 }
 
 .empty-form {
@@ -57,33 +67,82 @@ body:dir(rtl) {
 }
 
 .add-row a {
-    @apply btn-link  text-primary;
+    @apply btn-link text-primary;
 }
 
-label.required::after {
-    content: ' *';
-    @apply text-error px-1.5 text-base absolute;
+/* ─── Delete Confirmation ────────────────────────────────── */
+
+.delete-confirmation li {
+    @apply !px-8 !pt-1;
 }
+
+.delete-confirmation li a {
+    @apply link link-hover text-primary;
+}
+
+/* ─── Tabs ───────────────────────────────────────────────── */
+
+a.tab-active i {
+    @apply animate-bounce opacity-85;
+}
+
+/* ─── Misc Widgets ───────────────────────────────────────── */
+
+.json-field-viewer-wrapper input {
+    @apply input-sm;
+}
+
+input[data-jdp] {
+    @apply input input-sm;
+}
+
+div[data-theme="tailwind"] div[data-schematype]:not([data-schematype="object"]):hover {
+    background-color: initial;
+}
+
+/* ─── Select2 ────────────────────────────────────────────── */
 
 .select2.select2-container.select2-container--admin-autocomplete {
-    @apply select w-full select-sm;
+    @apply select !h-auto !w-full select-sm;
 }
 
 .select2-selection.select2-selection {
     @apply select-sm;
 }
 
+.select2-container .select2-selection--single {
+    @apply !p-1;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+    @apply !inline-block !overflow-auto !align-middle p-1;
+}
+
+.select2 .selection {
+    @apply h-full w-full;
+}
+
 .select2-results {
     @apply bg-base-200;
 }
 
-ul.select2-results__options {
-    @apply max-h-[300px] overflow-auto;
-    @apply list bg-base-200 rounded-box shadow-xl;
+.select2-results .select2-results__options {
+    @apply max-h-64 overflow-x-auto text-sm;
+    @apply list max-h-[300px] overflow-auto rounded-box bg-base-200 shadow-xl;
+
 }
 
+.select2-results .select2-results__option {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.09);
+}
+
+.select2-results .select2-results__option:hover {
+    @apply bg-base-300;
+}
+
+/* Intentionally overrides the border set above — transparent dropdown style */
 .select2-dropdown {
-    @apply border !border-base-100 !rounded-lg bg-base-200;
+    @apply border-none bg-transparent;
 }
 
 .select2-search--dropdown {
@@ -95,101 +154,89 @@ span.select2-search {
 }
 
 span.select2-search input.select2-search__field {
-    @apply focus:outline-0 transition-all focus:outline-offset-0;
-    @apply rounded-md input input-sm w-full bg-base-100 p-2;
-}
-
-.select2-container .select2-selection--single {
-    @apply !p-0;
-}
-
-span.select2-selection__clear {
-    @apply p-1 font-bold text-red-500 text-sm;
-}
-
-span.select2-selection__clear:hover {
-    @apply text-lg animate-ping;
-}
-
-.select2-results .select2-results__options {
-    @apply max-h-64 overflow-x-auto text-sm;
-}
-
-.select2-results__option:hover {
-    @apply bg-base-300;
-}
-
-.select2-results__option {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.09);
+    @apply input input-sm w-full rounded-md bg-base-100 p-2 transition-all focus:outline-0 focus:outline-offset-0;
 }
 
 .select2-selection__rendered {
-    @apply flex w-full h-auto flex-wrap ;
-
+    @apply flex h-auto w-full flex-wrap;
 }
 
 .select2-selection__choice {
-    @apply inline-block badge-md badge badge-outline m-1 p-1 px-1.5 h-auto;
+    @apply badge badge-md badge-outline inline-block h-auto !border-base-content/50 m-1 p-1 px-1.5;
 }
 
-.select2-selection__choice__remove {
-    @apply bg-base-300 text-base-content rounded-full inline-block text-center me-1;
-    width: 20px;
-    height: 20px;
+span.select2-selection__choice__remove {
+    @apply me-2 inline-flex h-4 w-4 items-center justify-center !rounded-full !bg-error align-middle !text-error-content;
+}
+
+span.select2-selection__clear {
+    @apply p-1 text-sm font-bold text-red-500;
+}
+
+span.select2-selection__clear:hover {
+    @apply animate-ping text-lg;
 }
 
 .select2 .selection {
     @apply w-full h-full;
 }
 
-.select2-container .select2-selection--single .select2-selection__rendered {
-    @apply !inline-block !overflow-auto !align-middle p-1;
+
+ul.select2-selection__rendered {
+    @apply !flex !overflow-auto !align-middle !p-1;
 }
 
 li[aria-selected="true"] {
     @apply hidden;
 }
 
-
-li[aria-selected="true"] {
-    @apply hidden;
-}
-
-a.inline-deletelink:hover {
-    @apply text-red-500 animate-pulse text-lg;
-}
-
-.select2-dropdown {
-    @apply border-none bg-transparent ;
-}
-
-a.tab-active i {
-    @apply animate-bounce opacity-85 ;
-}
+/* ─── Tom Select ─────────────────────────────────────────── */
 
 .ts-wrapper .ts-control {
-    @apply !bg-base-200 border border-base-300 ;
+    @apply !bg-base-200 border border-base-300;
 }
 
 .ts-wrapper .ts-control > div {
-    @apply border-base-300 border bg-base-300 text-base-content  ;
+    @apply mb-1 mr-1 cursor-pointer rounded-sm border-0 px-2 py-1 transition-colors duration-200;
+    @apply !bg-base-content !text-base-100;
 }
 
-.json-field-viewer-wrapper input {
-    @apply input-sm;
+.ts-wrapper .ts-control > div:hover {
+    @apply opacity-90;
 }
 
-div[data-theme="tailwind"] div[data-schematype]:not([data-schematype="object"]):hover {
-    background-color: initial;
+.ts-dropdown {
+    @apply !border-base-100 !bg-base-300 !text-base-content;
 }
 
-input[data-jdp] {
+.ts-dropdown .active {
+    @apply !bg-base-100 !text-base-content;
+}
+
+/* ─── Auth Selector Widget ───────────────────────────────── */
+
+.selector input {
     @apply input input-sm;
 }
 
-/*auth selector admin widget */
+.selector select {
+    @apply select min-h-64 w-full;
+}
+
+.selector h2 {
+    @apply p-2 text-sm font-bold;
+}
+
+.selector a {
+    @apply link link-hover text-sm;
+}
+
+.selector ul.selector-chooser {
+    @apply flex w-20 flex-col items-center justify-center bg-base-200;
+}
+
 .related-widget-wrapper div.selector {
-    @apply w-full flex flex-wrap ;
+    @apply flex w-full flex-wrap;
 }
 
 .related-widget-wrapper div.selector a {
@@ -200,7 +247,8 @@ input[data-jdp] {
     @apply bg-transparent;
 }
 
-.related-widget-wrapper div.selector .selector-available {
+.related-widget-wrapper div.selector .selector-available,
+.related-widget-wrapper div.selector .selector-chosen {
     @apply flex-1;
 }
 
@@ -208,39 +256,8 @@ input[data-jdp] {
     @apply w-full;
 }
 
-.related-widget-wrapper div.selector .selector-chosen {
-    @apply flex-1;
-}
-
+/* ─── User Form ──────────────────────────────────────────── */
 
 #user_form .field-password a {
     @apply link link-primary;
-}
-
-.selector input {
-    @apply input input-sm;
-}
-
-.selector select {
-    @apply min-h-64 w-full  select;
-}
-
-.selector ul.selector-chooser {
-    @apply flex flex-col justify-center items-center w-20 bg-base-200;
-}
-
-.selector h2 {
-    @apply font-bold p-2 text-sm;
-}
-
-.selector a {
-    @apply text-sm link link-hover;
-}
-
-.ts-dropdown {
-    @apply text-base-content  bg-base-content;
-}
-
-.ts-dropdown .active {
-    @apply bg-base-300 text-base-content  ;
 }
